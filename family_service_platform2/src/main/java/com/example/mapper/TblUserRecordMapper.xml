@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.TblUserRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.bean.TblUserRecord">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_password" property="userPassword"/>
+        <result column="user_type" property="userType"/>
+        <result column="user_gender" property="userGender"/>
+        <result column="user_job" property="userJob"/>
+        <result column="user_status" property="userStatus"/>
+        <result column="office_phone" property="officePhone"/>
+        <result column="inner_phone" property="innerPhone"/>
+        <result column="move_phone" property="movePhone"/>
+        <result column="email" property="email"/>
+        <result column="is_send_msg" property="isSendMsg"/>
+        <result column="start_date" property="startDate"/>
+        <result column="stop_date" property="stopDate"/>
+        <result column="birthday" property="birthday"/>
+        <result column="ip_rule" property="ipRule"/>
+        <result column="user_hiredate" property="userHiredate"/>
+        <result column="is_send_wchat" property="isSendWchat"/>
+        <result column="remark" property="remark"/>
+        <result column="is_dept_admin" property="isDeptAdmin"/>
+        <result column="last_login_date" property="lastLoginDate"/>
+        <result column="create_person" property="createPerson"/>
+        <result column="create_date" property="createDate"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_name, user_password, user_type, user_role, user_gender, user_dept, user_job, user_status, office_phone, inner_phone, move_phone, email, is_send_msg, start_date, stop_date, birthday, ip_rule, user_hiredate, is_send_wchat, remark, company, is_dept_admin, last_login_date, create_person, create_date
+    </sql>
+
+    <resultMap id="LoginResultMap" type="com.example.bean.TblUserRecord">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_password" property="userPassword"/>
+        <result column="user_type" property="userType"/>
+        <result column="user_gender" property="userGender"/>
+        <result column="user_job" property="userJob"/>
+        <result column="user_status" property="userStatus"/>
+        <result column="office_phone" property="officePhone"/>
+        <result column="inner_phone" property="innerPhone"/>
+        <result column="move_phone" property="movePhone"/>
+        <result column="email" property="email"/>
+        <result column="is_send_msg" property="isSendMsg"/>
+        <result column="start_date" property="startDate"/>
+        <result column="stop_date" property="stopDate"/>
+        <result column="birthday" property="birthday"/>
+        <result column="ip_rule" property="ipRule"/>
+        <result column="user_hiredate" property="userHiredate"/>
+        <result column="is_send_wchat" property="isSendWchat"/>
+        <result column="remark" property="remark"/>
+        <result column="is_dept_admin" property="isDeptAdmin"/>
+        <result column="last_login_date" property="lastLoginDate"/>
+        <result column="create_person" property="createPerson"/>
+        <result column="create_date" property="createDate"/>
+        <association property="tblRole" javaType="com.example.bean.TblRole">
+            <result column="role_privileges" property="rolePrivileges"></result>
+        </association>
+        <association property="tblDept" javaType="com.example.bean.TblDept">
+            <result column="dept_privileges" property="deptPrivileges"></result>
+        </association>
+        <association property="tblCompany" javaType="com.example.bean.TblCompany">
+            <result column="company_simple_name" property="companySimpleName"></result>
+        </association>
+    </resultMap>
+<!--    TblUserRecord login(@Param("username") String username, @Param("password") String password);-->
+    <select id="login" resultMap="LoginResultMap">
+        SELECT a.id, a.user_name, a.user_password, a.user_type, a.user_role, a.user_gender, a.user_dept, a.user_job, a.user_status, a.office_phone, a.inner_phone, a.move_phone, a.email, a.is_send_msg, a.start_date, a.stop_date, a.birthday, a.ip_rule,a.user_hiredate, a.is_send_wchat, a.remark, a.company, a.is_dept_admin, a.last_login_date, a.create_person, a.create_date,
+               b.dept_privileges,
+               c.role_privileges,
+               d.company_simple_name
+        FROM tbl_user_record a
+                 LEFT JOIN tbl_dept b ON a.user_dept = b.id
+                 LEFT JOIN tbl_role c ON a.user_role = c.id
+                 LEFT JOIN tbl_company d ON a.company = d.id
+        WHERE a.user_name = #{username}
+          and a.user_password = #{password}
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+package com.example.mapper;
+
+import com.example.bean.TblUserSubCompany;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+/**
+ * <p>
+ * 用户子公司表 Mapper 接口
+ * </p>
+ *
+ * @author GuYinTai
+ * @since 2023-03-23
+ */
+public interface TblUserSubCompanyMapper extends BaseMapper<TblUserSubCompany> {
+
+}
